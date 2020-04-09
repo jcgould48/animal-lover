@@ -7,6 +7,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image1.jpeg',
         animalId: '1',
+        liked: Boolean,
       },
       {
         name: 'Tim',
@@ -14,6 +15,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image2.jpeg',
         animalId: '2',
+        liked: Boolean,
       },
       {
         name: 'Larry',
@@ -21,12 +23,15 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image3.jpeg',
         animalId: '3',
-      }, {
+        liked: Boolean,
+      }, 
+      {
         name: 'Sam',
         type: 'bird',
         description: 'Parrot with wings',
         image: 'images/image4.jpeg',
         animalId: '4',
+        liked: Boolean,
       },
       {
         name: 'Mary',
@@ -34,6 +39,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog1.jpeg',
         animalId: '5',
+        liked: Boolean,
       },
       {
         name: 'Tim',
@@ -41,6 +47,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog2.jpeg',
         animalId: '6',
+        liked: Boolean,
       },
       {
         name: 'Larry',
@@ -48,12 +55,15 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog3.jpeg',
         animalId: '7',
-      }, {
+        liked: Boolean,
+      }, 
+      {
         name: 'Sam',
         type: 'dog',
         description: 'Parrot with wings',
         image: 'images/dog4.jpeg',
         animalId: '8',
+        liked: Boolean,
       },
       {
         name: 'Mary',
@@ -61,6 +71,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat1.jpeg',
         animalId: '9',
+        liked: Boolean,
       },
       {
         name: 'Tim',
@@ -68,6 +79,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat2.jpeg',
         animalId: '10',
+        liked: Boolean,
       },
       {
         name: 'Larry',
@@ -75,6 +87,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat3.jpeg',
         animalId: '11',
+        liked: Boolean,
       }, 
       {
         name: 'Sam',
@@ -82,32 +95,52 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat4.jpeg',
         animalId: '12',
+        liked: Boolean,
       },
 
   ];
 
 
   class Animals extends Component{
-    state = {
-      animals,
-  };
+    constructor(){
+    super()
+    this.state = {
+        animals,
+        liked: false,
+    };
+    this.onDelete = this.onDelete.bind(this)
+}
+
+onDelete(id){
+    const updatedAnimals = this.state.animals.filter((item)=> item.animalId !== id);
+
+    this.setState({animals: updatedAnimals})
+    console.log('Delete item with id: ', id);
+}
+
+handleChange = (event) => {
+    this.setState({searchTerm: event.target.value}, ()=>{console.log(this.state.searchTerm)})
+    
+};
+
+
     render(){
       return(
         <div>
     {this.state.animals
-.map((animal,idx) =>{
+.map(({image, type, name, description, animalId}) =>{
     return(
         <div class="ui four column grid">
   <div class="column">
     <div class="ui fluid card">
       <div class="image">
-        <img src={animal.image}/>
+        <img src={image}/>
       </div>
       <div class="content">
-          <a class="header">{animal.name}</a>
-          <div class="meta">{animal.type}</div>
+          <a class="header">{name}</a>
+          <div class="meta">{type}</div>
       <div class="description">
-      {animal.description}
+      {description}
       </div>
         </div>
         <div class="extra content">
@@ -129,7 +162,9 @@ let animals = [
        <button 
         className="ui grey button" 
         style={{margin:'10px 15px'}} 
-        onClick=''
+        onClick={() =>{
+            return this.onDelete(animalId)
+        }}
        >
         Discard
        </button>
@@ -143,6 +178,7 @@ let animals = [
         </div>
       )
     }
+
   }
 
 
