@@ -7,7 +7,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image1.jpeg',
         animalId: '1',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Tim',
@@ -15,7 +15,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image2.jpeg',
         animalId: '2',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Larry',
@@ -23,7 +23,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image3.jpeg',
         animalId: '3',
-        liked: Boolean,
+        liked: '',
       }, 
       {
         name: 'Sam',
@@ -31,7 +31,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/image4.jpeg',
         animalId: '4',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Mary',
@@ -39,7 +39,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog1.jpeg',
         animalId: '5',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Tim',
@@ -47,7 +47,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog2.jpeg',
         animalId: '6',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Larry',
@@ -55,7 +55,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog3.jpeg',
         animalId: '7',
-        liked: Boolean,
+        liked: '',
       }, 
       {
         name: 'Sam',
@@ -63,7 +63,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/dog4.jpeg',
         animalId: '8',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Mary',
@@ -71,7 +71,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat1.jpeg',
         animalId: '9',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Tim',
@@ -79,7 +79,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat2.jpeg',
         animalId: '10',
-        liked: Boolean,
+        liked: '',
       },
       {
         name: 'Larry',
@@ -87,7 +87,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat3.jpeg',
         animalId: '11',
-        liked: Boolean,
+        liked: '',
       }, 
       {
         name: 'Sam',
@@ -95,7 +95,7 @@ let animals = [
         description: 'Parrot with wings',
         image: 'images/cat4.jpeg',
         animalId: '12',
-        liked: Boolean,
+        liked: '',
       },
 
   ];
@@ -106,7 +106,7 @@ let animals = [
     super()
     this.state = {
         animals,
-        liked: false,
+        liked: '',
     };
     this.onDelete = this.onDelete.bind(this)
 }
@@ -114,13 +114,24 @@ let animals = [
 onDelete(id){
     const updatedAnimals = this.state.animals.filter((item)=> item.animalId !== id);
 
-    this.setState({animals: updatedAnimals})
-    console.log('Delete item with id: ', id);
+        this.setState({animals: updatedAnimals})
+        console.log('Delete item with id: ', id);
 }
 
-handleChange = (event) => {
-    this.setState({searchTerm: event.target.value}, ()=>{console.log(this.state.searchTerm)})
+onLike = (event) => {
+    this.setState({liked: 'yes'}, ()=>{console.log(this.state.animals)})
     
+};
+
+onDislike = (id) => {
+    const updatedAnimal = this.state.animals.filter((item) => {
+        if(item.animalId === id){
+            this.setState({liked: 'no'})
+        }
+    });
+
+    
+    console.log('Delete item with id: ', id);
 };
 
 
@@ -148,14 +159,16 @@ handleChange = (event) => {
           <button 
         className="ui blue button" 
         style={{margin:'10px 15px'}} 
-        onClick=''
+        onClick={this.onLike}
        >
         Like
        </button>
        <button 
         className="ui red button" 
         style={{margin:'10px 15px'}} 
-        onClick=''
+        onClick={() =>{
+            return this.onDislike(animalId)
+        }}
        >
         Dislike
        </button>
